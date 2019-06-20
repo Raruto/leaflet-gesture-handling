@@ -325,10 +325,6 @@
       }
     };
 
-    /*
-     * * Leaflet Gesture Handling **
-     * * Version 1.1.9
-     */
     var draggingMap = false;
     var gestureHandlingOptions = {
       text: {},
