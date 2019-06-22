@@ -358,7 +358,10 @@
 
         L.DomEvent.on(this._map, "movestart", this._handleDragging, this);
         L.DomEvent.on(this._map, "move", this._handleDragging, this);
-        L.DomEvent.on(this._map, "moveend", this._handleDragging, this);
+        L.DomEvent.on(this._map, "moveend", this._handleDragging, this); // Reset any previously added fullscreen events
+
+        L.DomEvent.off(this._map, "enterFullscreen", this._onEnterFullscreen, this);
+        L.DomEvent.off(this._map, "exitFullscreen", this._onExitFullscreen, this);
         L.DomEvent.on(this._map, "enterFullscreen", this._onEnterFullscreen, this);
         L.DomEvent.on(this._map, "exitFullscreen", this._onExitFullscreen, this);
         L.DomUtil.addClass(this._map._container, "leaflet-gesture-handling");
@@ -382,8 +385,6 @@
         L.DomEvent.off(this._map, "movestart", this._handleDragging, this);
         L.DomEvent.off(this._map, "move", this._handleDragging, this);
         L.DomEvent.off(this._map, "moveend", this._handleDragging, this);
-        L.DomEvent.off(this._map, "enterFullscreen", this._onEnterFullscreen, this);
-        L.DomEvent.off(this._map, "exitFullscreen", this._onExitFullscreen, this);
         L.DomUtil.removeClass(this._map._container, "leaflet-gesture-handling");
       },
       _handleDragging: function (e) {
