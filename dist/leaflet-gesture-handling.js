@@ -359,6 +359,8 @@
         L.DomEvent.on(this._map, "movestart", this._handleDragging, this);
         L.DomEvent.on(this._map, "move", this._handleDragging, this);
         L.DomEvent.on(this._map, "moveend", this._handleDragging, this);
+        L.DomEvent.on(this._map, "enterFullscreen", this._onEnterFullscreen, this);
+        L.DomEvent.on(this._map, "exitFullscreen", this._onExitFullscreen, this);
         L.DomUtil.addClass(this._map._container, "leaflet-gesture-handling");
       },
       removeHooks: function () {
@@ -380,6 +382,8 @@
         L.DomEvent.off(this._map, "movestart", this._handleDragging, this);
         L.DomEvent.off(this._map, "move", this._handleDragging, this);
         L.DomEvent.off(this._map, "moveend", this._handleDragging, this);
+        L.DomEvent.off(this._map, "enterFullscreen", this._onEnterFullscreen, this);
+        L.DomEvent.off(this._map, "exitFullscreen", this._onExitFullscreen, this);
         L.DomUtil.removeClass(this._map._container, "leaflet-gesture-handling");
       },
       _handleDragging: function (e) {
@@ -530,6 +534,12 @@
       },
       _handleMouseOut: function (e) {
         if (!draggingMap) this._disableInteractions();
+      },
+      _onExitFullscreen: function () {
+        if (this._map.options.gestureHandling) this._map.gestureHandling.enable();
+      },
+      _onEnterFullscreen: function () {
+        if (this._map.options.gestureHandling) this._map.gestureHandling.disable();
       }
     });
     L.Map.mergeOptions({
