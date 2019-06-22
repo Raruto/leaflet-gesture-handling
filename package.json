@@ -39,7 +39,7 @@
       "web": "https://github.com/elmarquis/Leaflet.GestureHandling"
     }
   ],
-  "license": "MIT",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/Raruto/leaflet-gesture-handling/issues"
   },
