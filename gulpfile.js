@@ -1,5 +1,5 @@
 var gulp = require("gulp"),
-  minifyCSS = require("gulp-minify-css"),
+  minifyCSS = require("gulp-clean-css"),
   concat = require("gulp-concat"),
   uglify = require("gulp-uglify"),
   prefix = require("gulp-autoprefixer"),

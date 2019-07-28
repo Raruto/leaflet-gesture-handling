@@ -1,6 +1,6 @@
 {
   "name": "@raruto/leaflet-gesture-handling",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A Leaflet plugin that allows to prevent default map scroll/touch behaviours",
   "main": "./dist/leaflet-gesture-handling.min.js",
   "files": [
@@ -53,8 +53,8 @@
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-better-rollup": "^4.0.1",
+    "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
-    "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
