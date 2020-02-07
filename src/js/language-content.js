@@ -53,8 +53,8 @@ export default {
     //German
     de: {
         touch: "Verschieben der Karte mit zwei Fingern",
-        scroll: "Verwende Strg+Scrollen zum Zoomen der Karte",
-        scrollMac: "\u2318"
+        scroll: "Verwende Strg + Scroll zum Zoomen der Karte",
+        scrollMac: "Verwende \u2318 + Scroll zum Zoomen der Karte"
     },
     //Greek
     el: {
