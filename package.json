@@ -12,7 +12,7 @@
     "build": "gulp build",
     "start": "gulp dev",
     "format": "prettier --write src/*/*",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
