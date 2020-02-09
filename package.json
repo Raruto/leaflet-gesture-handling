@@ -12,7 +12,8 @@
     "build": "gulp build",
     "start": "gulp dev",
     "format": "prettier --write src/*/*",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "version": "npm run build && git add -A dist"
   },
   "repository": {
     "type": "git",

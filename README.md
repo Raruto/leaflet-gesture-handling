@@ -3,11 +3,11 @@
 A Leaflet plugin that allows to prevent default map scroll/touch behaviours.
 
 
-_For a working example see [demo](https://raruto.github.io/examples/leaflet-gesture-handling/leaflet-gesture-handling.html)_
+_For a working example see [demo](https://raruto.github.io/leaflet-gesture-handling/examples/leaflet-gesture-handling.html)_
 
 
 <p align="center">
-    <a href="https://raruto.github.io/examples/leaflet-gesture-handling/leaflet-gesture-handling.html"><img src="https://raruto.github.io/img/leaflet-gesture-handling.png" alt="Ctrl + scroll to zoom the map" /></a>
+    <a href="https://raruto.github.io/leaflet-gesture-handling/examples/leaflet-gesture-handling.html"><img src="https://raruto.github.io/img/leaflet-gesture-handling.png" alt="Ctrl + scroll to zoom the map" /></a>
 </p>
 
 
