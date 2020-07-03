@@ -1,6 +1,6 @@
 {
 	"name": "@raruto/leaflet-gesture-handling",
-	"version": "1.2.6",
+	"version": "1.2.7",
 	"description": "A Leaflet plugin that allows to prevent default map scroll/touch behaviours",
 	"main": "./dist/leaflet-gesture-handling.min.js",
 	"module": "src/index.js",
@@ -29,7 +29,8 @@
 		"scroll"
 	],
 	"author": "A Marquis",
-	"contributors": [{
+	"contributors": [
+		{
 			"name": "Raruto",
 			"url": "https://github.com/Raruto/leaflet-gesture-handling"
 		},
