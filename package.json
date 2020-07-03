@@ -4,10 +4,6 @@
 	"description": "A Leaflet plugin that allows to prevent default map scroll/touch behaviours",
 	"main": "./dist/leaflet-gesture-handling.min.js",
 	"module": "src/index.js",
-	"files": [
-		"dist"
-	],
-	"types": "./dist/leaflet-gesture-handling.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "rollup -c build/rollup.config.js",
