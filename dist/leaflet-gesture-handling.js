@@ -506,6 +506,7 @@
 				this._enableTouchWarning();
 			} else {
 				this._disableTouchWarning();
+				this._enableInteractions();
 			}
 		},
 
@@ -521,7 +522,7 @@
 				L.bind(
 					function() {
 						this._disableWarning('touch');
-						this._enableInteractions();
+						// this._enableInteractions();
 					}, this),
 				delay || 0
 			);

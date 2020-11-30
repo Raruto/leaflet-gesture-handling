@@ -181,6 +181,7 @@ export var GestureHandling = L.Handler.extend({
 			this._enableTouchWarning();
 		} else {
 			this._disableTouchWarning();
+			this._enableInteractions();
 		}
 	},
 
@@ -196,7 +197,7 @@ export var GestureHandling = L.Handler.extend({
 			L.bind(
 				function() {
 					this._disableWarning('touch');
-					this._enableInteractions();
+					// this._enableInteractions();
 				}, this),
 			delay || 0
 		);
