@@ -361,6 +361,10 @@
 			L.DomEvent.on(this._map, "move", this._handleDragging, this);
 			L.DomEvent.on(this._map, "moveend", this._handleDragging, this);
 
+			// Prevent page scroll on "leaflet-popup-content"
+			this._map.on("popupopen", this._handleScrollOnPopup, this);
+			this._map.on("popupclose", this._handleScrollOnPopup, this);
+
 			// Reset any previously added fullscreen events
 			L.DomEvent.off(this._map, "enterFullscreen", this._onEnterFullscreen, this);
 			L.DomEvent.off(this._map, "exitFullscreen", this._onExitFullscreen, this);
@@ -386,6 +390,9 @@
 			L.DomEvent.off(this._map, "movestart", this._handleDragging, this);
 			L.DomEvent.off(this._map, "move", this._handleDragging, this);
 			L.DomEvent.off(this._map, "moveend", this._handleDragging, this);
+
+			this._map.off("popupopen", this._handleScrollOnPopup, this);
+			this._map.off("popupclose", this._handleScrollOnPopup, this);
 
 			L.DomUtil.removeClass(this._map._container, "leaflet-gesture-handling");
 		},
@@ -554,6 +561,11 @@
 				this._enableScrollWarning();
 				this._disableScrollWarning(this._map.options.gestureHandlingOptions.duration);
 			}
+		},
+
+		_handleScrollOnPopup: function(e) {
+			L.DomEvent[e.type == 'popupopen' ? 'on' : 'off']
+			(e.popup._contentNode, "wheel", this._handleScroll, this);
 		},
 
 		_handleMouseOver: function(e) {
