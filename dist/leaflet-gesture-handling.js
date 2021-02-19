@@ -554,7 +554,7 @@
 		},
 
 		_handleScroll: function(e) {
-			if (e.metaKey || e.ctrlKey) {
+			if (e.metaKey || e.ctrlKey || (e.shiftKey && this._map._rotate)) {
 				e.preventDefault();
 				this._disableScrollWarning();
 			} else {
