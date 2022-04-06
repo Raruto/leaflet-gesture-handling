@@ -127,12 +127,12 @@
 		},
 
 		_parseGestureHandlingOptions: function() {
+			var text = this._map.options.gestureHandlingOptions.text || this._map.options.gestureHandlingText || gestureHandlingOptions.text;
+			var duration = this._map.options.gestureHandlingOptions.duration || this._map.options.gestureHandlingDuration || gestureHandlingOptions.duration;
 			var options = L.extend(this._map.options.gestureHandlingOptions, gestureHandlingOptions);
-
-			//For backwards compatibility, merge gestureHandlingText into the new options object
-			if (this._map.options.gestureHandlingText) {
-				options.text = this._map.options.gestureHandlingText;
-			}
+			// Merge default gestureHandlingOptions into the new options object
+			options.text = text;
+			options.duration = duration;
 			return options;
 		},
 
