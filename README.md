@@ -53,6 +53,15 @@ _For a working example see [demo](https://raruto.github.io/leaflet-gesture-handl
         center: [41.4583, 12.7059],
         zoom: 5,
         gestureHandling: true,
+        gestureHandlingOptions: { // OPTIONAL
+          // text: {
+          //   touch: "Hey bro, use two fingers to move the map",
+          //   scroll: "Hey bro, use ctrl + scroll to zoom the map",
+          //   scrollMac: "Hey bro, use \u2318 + scroll to zoom the map"
+          // },
+          // locale: 'en', // set language of the warning message.
+          // duration: 5000 // set time in ms before the message should disappear.
+        }
       });
       ...
     </script>
