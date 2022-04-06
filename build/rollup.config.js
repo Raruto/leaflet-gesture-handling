@@ -5,6 +5,7 @@ import postcss from 'rollup-plugin-postcss';
 import postcssImport from 'postcss-import';
 import postcssCopy from 'postcss-copy';
 import rollupGitVersion from 'rollup-plugin-git-version';
+import copy from 'rollup-plugin-copy'
 
 let plugin = require('../package.json');
 let plugin_name = plugin.name.replace("@raruto/", "");
@@ -15,6 +16,7 @@ let output = {
 	format: "umd",
 	sourcemap: true,
 	name: plugin_name,
+	inlineDynamicImports: true
 
 };
 
@@ -24,6 +26,7 @@ let plugins = [
 		include: '../node_modules/**'
 	}),
 	rollupGitVersion(),
+	copy({ targets: [ { src: ['src/locales/**/*', '!src/locales/**/*.min.js'], dest: 'dist/locales' }, ] }),
 ];
 
 export default [

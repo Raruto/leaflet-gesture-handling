@@ -1,6 +1,4 @@
-import LanguageContent from "./locales";
-
-window.LanguageContent = LanguageContent;
+import defaultLocale from "./locales/en.js";
 
 var draggingMap = false;
 var gestureHandlingOptions = {
@@ -131,13 +129,14 @@ export var GestureHandling = L.Handler.extend({
 		var opts = this._parseGestureHandlingOptions();
 
 		//If user has supplied custom language, use that, otherwise auto set it from the language files
-		var content = this._isLanguageContent(opts.text) ? opts.text : this._getLanguageContent(opts.locale);
+		(this._isLanguageContent(opts.text) ? Promise.resolve(opts.text) : this._getLanguageContent(opts.locale)).then((content) => {
+			this._map._container.setAttribute("data-gesture-handling-touch-content", content.touch);
+			this._map._container.setAttribute("data-gesture-handling-scroll-content", content.scroll);
+	
+			this._touchWarning = content.touch;
+			this._scrollWarning = content.scroll;
+		});
 
-		this._map._container.setAttribute("data-gesture-handling-touch-content", content.touch);
-		this._map._container.setAttribute("data-gesture-handling-scroll-content", content.scroll);
-
-		this._touchWarning = content.touch;
-		this._scrollWarning = content.scroll;
 	},
 
 	_getUserLanguage: function() {
@@ -147,20 +146,24 @@ export var GestureHandling = L.Handler.extend({
 	_getLanguageContent: function(lang) {
 		//Determine user language (eg. fr or en-US)
 		lang = lang || this._getUserLanguage() || "en";
+		
+		var resolve, promise = new Promise(_resolve => { resolve = _resolve });
+		var consume = (m) => {
+			var content = m.default || {};
+			//Check if they're on a mac for displaying appropriate command control (⌘ instead of Ctrl)
+			content.scroll = this._isMacUser() ? content.scrollMac : content.scroll
+			resolve(content);
+		};
 
 		//Lookup the appropriate language content
-		var content = LanguageContent[lang];
-
+		import('./locales/' + lang + '.js').then(consume)
 		//If no result, try searching by the first part only (eg. en-US, just use en).
-		content = (!content && lang.indexOf("-") !== -1) ? LanguageContent[lang.split("-")[0]] : content;
+		.catch((e) => import('./locales/' + lang.split("-")[0] + '.js').then(consume)
+			// If still nothing, default to English.
+			.catch((e) => Promise.resolve({default:defaultLocale}).then(consume))
+		);
 
-		// If still nothing, default to English.
-		content = content || LanguageContent["en"];
-
-		//Check if they're on a mac for displaying appropriate command control (⌘ instead of Ctrl)
-		content.scroll = this._isMacUser() ? content.scrollMac : content.scroll;
-
-		return content;
+		return promise;
 	},
 
 	_hasClass: function(element, classList) {
