@@ -512,6 +512,7 @@
 			} else if (e.touches.length === 1) {
 				this._enableTouchWarning();
 			} else {
+				e.preventDefault();
 				this._disableTouchWarning();
 				this._enableInteractions();
 			}
