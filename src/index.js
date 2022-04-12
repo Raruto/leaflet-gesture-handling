@@ -1,5 +1,8 @@
 import defaultLocale from "./locales/en.js";
 
+// Prevent CORS issues for relative locations (dynamic import)
+const baseURL = ((document.currentScript && document.currentScript.src) || (import.meta && import.meta.url)).split("/").slice(0,-1).join("/") + '/';
+
 var draggingMap = false;
 var gestureHandlingOptions = {
 	text: {},
@@ -156,9 +159,9 @@ export var GestureHandling = L.Handler.extend({
 		};
 
 		//Lookup the appropriate language content
-		import('./locales/' + lang + '.js').then(consume)
+		import(baseURL + './locales/' + lang + '.js').then(consume)
 		//If no result, try searching by the first part only (eg. en-US, just use en).
-		.catch((e) => import('./locales/' + lang.split("-")[0] + '.js').then(consume)
+		.catch((e) => import(baseURL + './locales/' + lang.split("-")[0] + '.js').then(consume)
 			// If still nothing, default to English.
 			.catch((e) => Promise.resolve({default:defaultLocale}).then(consume))
 		);
