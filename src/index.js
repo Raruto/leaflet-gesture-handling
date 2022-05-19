@@ -91,6 +91,15 @@ export var GestureHandling = L.Handler.extend({
 		this._map.dragging.enable();
 		this._map.scrollWheelZoom.enable();
 		if (this._map.tap) this._map.tap.enable();
+		// deal with safari bug Leaflet version 1.7
+		if (parseInt(L.version.split('.')[1], 10) < 8 ) {
+			var is_chrome = navigator.userAgent.indexOf("Chrome") > -1;
+			var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+			if ( !is_chrome && is_safari ) {
+				this._map.tap.disable();
+			}
+		}
+		// end
 	},
 
 	_enableWarning: function(gesture) {
