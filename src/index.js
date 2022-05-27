@@ -135,7 +135,7 @@ export var GestureHandling = L.Handler.extend({
 		(this._isLanguageContent(opts.text) ? Promise.resolve(opts.text) : this._getLanguageContent(opts.locale)).then((content) => {
 			this._map._container.setAttribute("data-gesture-handling-touch-content", content.touch);
 			this._map._container.setAttribute("data-gesture-handling-scroll-content", content.scroll);
-	
+
 			this._touchWarning = content.touch;
 			this._scrollWarning = content.scroll;
 		});
@@ -149,7 +149,7 @@ export var GestureHandling = L.Handler.extend({
 	_getLanguageContent: function(lang) {
 		//Determine user language (eg. fr or en-US)
 		lang = lang || this._getUserLanguage() || "en";
-		
+
 		var resolve, promise = new Promise(_resolve => { resolve = _resolve });
 		var consume = (m) => {
 			var content = m.default || {};
@@ -180,9 +180,13 @@ export var GestureHandling = L.Handler.extend({
 
 	_handleTouch: function(e) {
 		//Disregard touch events on the minimap if present
-		var ignore = this._hasClass(e.target, ["leaflet-control-minimap", "leaflet-interactive", "leaflet-popup-content", "leaflet-popup-content-wrapper", "leaflet-popup-close-button", "leaflet-control-zoom-in", "leaflet-control-zoom-out"]);
+		//var ignore = this._hasClass(e.target, ["leaflet-control-minimap", "leaflet-interactive", "leaflet-popup-content", "leaflet-popup-content-wrapper", "leaflet-popup-close-button", "leaflet-control-zoom-in", "leaflet-control-zoom-out"]);
+		var ignore = this._hasClass(e.target, ["leaflet-control-minimap", "leaflet-interactive",]);
+		var ignore_control = e.target.className.indexOf("leaflet-control");
+		var ignore_popup = e.target.className.indexOf("leaflet-popup");
 
-		if (ignore) {
+		//if (ignore) {
+		if (ignore || ignore_control !== -1 || ignore_popup !== -1) {
 			if (L.DomUtil.hasClass(e.target, "leaflet-interactive") && e.type === "touchmove" && e.touches.length === 1) {
 				this._enableTouchWarning();
 			} else {
