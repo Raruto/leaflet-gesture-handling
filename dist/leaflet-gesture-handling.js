@@ -93,15 +93,22 @@
 		},
 
 		_disableInteractions: function() {
-			this._map.dragging.disable();
-			this._map.scrollWheelZoom.disable();
-			if (this._map.tap) this._map.tap.disable();
+			this._toggleInteraction('dragging', false);
+			this._toggleInteraction('scrollWheelZoom', false);
+			this._toggleInteraction('tap', false);
 		},
 
 		_enableInteractions: function() {
-			this._map.dragging.enable();
-			this._map.scrollWheelZoom.enable();
-			if (this._map.tap) this._map.tap.enable();
+			this._toggleInteraction('dragging', true);
+			this._toggleInteraction('scrollWheelZoom', true);
+			this._toggleInteraction('tap', true);
+		},
+
+		_toggleInteraction: function(name, active) {
+			// enable the handler only if related option is true
+			if (this._map.options[name] && this._map[name]) {
+				this._map[name][active ? 'enable' : 'disable']();
+			}
 		},
 
 		_enableWarning: function(gesture) {
@@ -219,7 +226,7 @@
 
 		_enableScrollWarning: function() {
 			this._enableWarning('scroll');
-			this._map.scrollWheelZoom.disable();
+			this._toggleInteraction('scrollWheelZoom', false);
 		},
 
 		_disableScrollWarning: function(delay) {
@@ -229,19 +236,21 @@
 				L.bind(
 					function() {
 						this._disableWarning('scroll');
-						this._map.scrollWheelZoom.enable();
+						this._toggleInteraction('scrollWheelZoom', true);
 					}, this),
 				delay || 0
 			);
 		},
 
 		_handleScroll: function(e) {
-			if (e.metaKey || e.ctrlKey || (e.shiftKey && this._map._rotate)) {
-				e.preventDefault();
-				this._disableScrollWarning();
-			} else {
-				this._enableScrollWarning();
-				this._disableScrollWarning(this._map.options.gestureHandlingOptions.duration);
+			if (this._map.scrollWheelZoom && this._map.scrollWheelZoom.enabled()) {
+				if (e.metaKey || e.ctrlKey || (e.shiftKey && this._map._rotate)) {
+					e.preventDefault();
+					this._disableScrollWarning();
+				} else {
+					this._enableScrollWarning();
+					this._disableScrollWarning(this._map.options.gestureHandlingOptions.duration);
+				}
 			}
 		},
 
