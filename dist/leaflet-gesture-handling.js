@@ -92,23 +92,30 @@
 			}
 		},
 
+		_disableInteraction: function(name) {
+			// disable the handler only if related option is true
+			if (this._map.options[name] && this._map[name]) {
+				this._map[name].disable();
+			}
+		},
+
+		_enableInteraction: function(name) {
+			// enable the handler only if related option is true
+			if (this._map.options[name] && this._map[name]) {
+				this._map[name].enable();
+			}
+		},
+
 		_disableInteractions: function() {
-			this._toggleInteraction('dragging', false);
-			this._toggleInteraction('scrollWheelZoom', false);
-			this._toggleInteraction('tap', false);
+			this._disableInteraction('dragging');
+			this._disableInteraction('scrollWheelZoom');
+			this._disableInteraction('tap');
 		},
 
 		_enableInteractions: function() {
-			this._toggleInteraction('dragging', true);
-			this._toggleInteraction('scrollWheelZoom', true);
-			this._toggleInteraction('tap', true);
-		},
-
-		_toggleInteraction: function(name, active) {
-			// enable the handler only if related option is true
-			if (this._map.options[name] && this._map[name]) {
-				this._map[name][active ? 'enable' : 'disable']();
-			}
+			this._enableInteraction('dragging');
+			this._enableInteraction('scrollWheelZoom');
+			this._enableInteraction('tap');
 		},
 
 		_enableWarning: function(gesture) {
@@ -226,7 +233,7 @@
 
 		_enableScrollWarning: function() {
 			this._enableWarning('scroll');
-			this._toggleInteraction('scrollWheelZoom', false);
+			this._disableInteraction('scrollWheelZoom');
 		},
 
 		_disableScrollWarning: function(delay) {
@@ -236,7 +243,7 @@
 				L.bind(
 					function() {
 						this._disableWarning('scroll');
-						this._toggleInteraction('scrollWheelZoom', true);
+						this._enableInteraction('scrollWheelZoom');
 					}, this),
 				delay || 0
 			);
