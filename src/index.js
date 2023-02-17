@@ -22,11 +22,11 @@ export var GestureHandling = L.Handler.extend({
 		this._disableInteractions();
 
 		//Uses native event listeners instead of L.DomEvent due to issues with Android touch events turning into pointer events
-		this._map._container.addEventListener("touchstart", this._handleTouch);
-		this._map._container.addEventListener("touchmove", this._handleTouch);
-		this._map._container.addEventListener("touchend", this._handleTouch);
-		this._map._container.addEventListener("touchcancel", this._handleTouch);
-		this._map._container.addEventListener("click", this._handleTouch);
+		this._map._container.addEventListener("touchstart", this._handleTouch, { passive: true });
+		this._map._container.addEventListener("touchmove", this._handleTouch, { passive: true });
+		this._map._container.addEventListener("touchend", this._handleTouch, { passive: true });
+		this._map._container.addEventListener("touchcancel", this._handleTouch, { passive: true });
+		this._map._container.addEventListener("click", this._handleTouch, { passive: true });
 
 		L.DomEvent.on(this._map._container, "wheel", this._handleScroll, this);
 		L.DomEvent.on(this._map._container, "mouseenter", this._handleMouseOver, this);
