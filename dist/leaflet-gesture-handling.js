@@ -1,8 +1,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global['leaflet-gesture-handling'] = {}));
-}(this, (function (exports) { 'use strict';
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["leaflet-gesture-handling"] = {}));
+})(this, (function (exports) { 'use strict';
 
 	//English
 	var defaultLocale = {
@@ -12,7 +12,7 @@
 	};
 
 	// Prevent CORS issues for relative locations (dynamic import)
-	const baseURL = ((document.currentScript && document.currentScript.src) || (({ url: (typeof document === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : (document.currentScript && document.currentScript.src || new URL('leaflet-gesture-handling.js', document.baseURI).href)) }) && (typeof document === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : (document.currentScript && document.currentScript.src || new URL('leaflet-gesture-handling.js', document.baseURI).href)))).split("/").slice(0,-1).join("/") + '/';
+	const baseURL = ((document.currentScript && document.currentScript.src) || (({ url: (typeof document === 'undefined' && typeof location === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : typeof document === 'undefined' ? location.href : (document.currentScript && document.currentScript.src || new URL('leaflet-gesture-handling.js', document.baseURI).href)) }) && (typeof document === 'undefined' && typeof location === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : typeof document === 'undefined' ? location.href : (document.currentScript && document.currentScript.src || new URL('leaflet-gesture-handling.js', document.baseURI).href)))).split("/").slice(0,-1).join("/") + '/';
 
 	var draggingMap = false;
 	var gestureHandlingOptions = {
@@ -294,7 +294,5 @@
 
 	exports.GestureHandling = GestureHandling;
 
-	Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+}));
 //# sourceMappingURL=leaflet-gesture-handling.js.map
