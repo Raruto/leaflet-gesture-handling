@@ -2,7 +2,9 @@
 	"name": "@raruto/leaflet-gesture-handling",
 	"version": "1.4.3",
 	"description": "A Leaflet plugin that allows to prevent default map scroll/touch behaviours",
+	"type": "module",
 	"main": "./dist/leaflet-gesture-handling.min.js",
+	"browser": "./dist/leaflet-gesture-handling.min.js",
 	"module": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -46,13 +48,13 @@
 	},
 	"devDependencies": {
 		"postcss-copy": "^7.1.0",
-		"postcss-import": "^12.0.1",
-		"rollup": "^2.2.0",
-		"rollup-plugin-commonjs": "^10.1.0",
+		"postcss-import": "^15.1.0",
+		"rollup": "^3.17.2",
 		"rollup-plugin-copy": "^3.4.0",
 		"rollup-plugin-git-version": "^0.3.1",
-		"rollup-plugin-node-resolve": "^5.2.0",
-		"rollup-plugin-postcss": "^2.5.0",
-		"rollup-plugin-terser": "^7.0.2"
+		"rollup-plugin-postcss": "^4.0.2",
+		"@rollup/plugin-commonjs": "^24.0.1",
+		"@rollup/plugin-node-resolve": "^15.0.1",
+		"@rollup/plugin-terser": "^0.4.0"
 	}
 }

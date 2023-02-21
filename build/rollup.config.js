@@ -1,13 +1,14 @@
-import { terser } from "rollup-plugin-terser";
-import resolve from 'rollup-plugin-node-resolve';
-import commonJS from 'rollup-plugin-commonjs';
+import terser from "@rollup/plugin-terser";
+import resolve from '@rollup/plugin-node-resolve';
+import commonJS from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import postcssImport from 'postcss-import';
 import postcssCopy from 'postcss-copy';
 import rollupGitVersion from 'rollup-plugin-git-version';
 import copy from 'rollup-plugin-copy'
 
-let plugin = require('../package.json');
+import plugin from '../package.json' assert { type: "json" };
+
 let plugin_name = plugin.name.replace("@raruto/", "");
 
 let input = plugin.module;
