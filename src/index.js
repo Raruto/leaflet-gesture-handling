@@ -21,12 +21,21 @@ export var GestureHandling = L.Handler.extend({
 		this._setGestureHandlingOptions();
 		this._disableInteractions();
 
-		//Uses native event listeners instead of L.DomEvent due to issues with Android touch events turning into pointer events
-		this._map._container.addEventListener("touchstart", this._handleTouch);
-		this._map._container.addEventListener("touchmove", this._handleTouch);
-		this._map._container.addEventListener("touchend", this._handleTouch);
-		this._map._container.addEventListener("touchcancel", this._handleTouch);
-		this._map._container.addEventListener("click", this._handleTouch);
+		// Prevent touch events
+		if (L.version >= "1.8") {
+			L.DomEvent.on(this._map._container, "touchstart", this._handleTouch, this);
+			L.DomEvent.on(this._map._container, "touchmove", this._handleTouch, this);
+			L.DomEvent.on(this._map._container, "touchend", this._handleTouch, this);
+			L.DomEvent.on(this._map._container, "touchcancel", this._handleTouch, this);
+			L.DomEvent.on(this._map._container, "click", this._handleTouch, this);
+		} else {
+			//Uses native event listeners instead of L.DomEvent due to issues with Android touch events turning into pointer events
+			this._map._container.addEventListener("touchstart", this._handleTouch);
+			this._map._container.addEventListener("touchmove", this._handleTouch);
+			this._map._container.addEventListener("touchend", this._handleTouch);
+			this._map._container.addEventListener("touchcancel", this._handleTouch);
+			this._map._container.addEventListener("click", this._handleTouch);
+		}
 
 		L.DomEvent.on(this._map._container, "wheel", this._handleScroll, this);
 		L.DomEvent.on(this._map._container, "mouseenter", this._handleMouseOver, this);
@@ -53,11 +62,19 @@ export var GestureHandling = L.Handler.extend({
 	removeHooks: function() {
 		this._enableInteractions();
 
-		this._map._container.removeEventListener("touchstart", this._handleTouch);
-		this._map._container.removeEventListener("touchmove", this._handleTouch);
-		this._map._container.removeEventListener("touchend", this._handleTouch);
-		this._map._container.removeEventListener("touchcancel", this._handleTouch);
-		this._map._container.removeEventListener("click", this._handleTouch);
+		if (L.version >= "1.8") {
+			L.DomEvent.off(this._map._container, "touchstart", this._handleTouch, this);
+			L.DomEvent.off(this._map._container, "touchmove", this._handleTouch, this);
+			L.DomEvent.off(this._map._container, "touchend", this._handleTouch, this);
+			L.DomEvent.off(this._map._container, "touchcancel", this._handleTouch, this);
+			L.DomEvent.off(this._map._container, "click", this._handleTouch, this);
+		} else {
+			this._map._container.removeEventListener("touchstart", this._handleTouch);
+			this._map._container.removeEventListener("touchmove", this._handleTouch);
+			this._map._container.removeEventListener("touchend", this._handleTouch);
+			this._map._container.removeEventListener("touchcancel", this._handleTouch);
+			this._map._container.removeEventListener("click", this._handleTouch);
+		}
 
 		L.DomEvent.off(this._map._container, "wheel", this._handleScroll, this);
 		L.DomEvent.off(this._map._container, "mouseenter", this._handleMouseOver, this);
