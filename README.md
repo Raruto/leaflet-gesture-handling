@@ -29,8 +29,8 @@ _For a working example see [demo](https://raruto.github.io/leaflet-gesture-handl
     ...
     <style> html, body, #map { height: 100%; width: 100%; padding: 0; margin: 0; } </style>
     <!-- Leaflet (JS/CSS) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- leaflet-gesture-handling -->
     <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-gesture-handling@latest/dist/leaflet-gesture-handling.min.css" type="text/css">
     <script src="https://unpkg.com/@raruto/leaflet-gesture-handling@latest/dist/leaflet-gesture-handling.min.js"></script>
@@ -49,7 +49,7 @@ _For a working example see [demo](https://raruto.github.io/leaflet-gesture-handl
     ```html
     <script>
       ...
-      var map = new L.Map('map', {
+      const map = new L.Map('map', {
         center: [41.4583, 12.7059],
         zoom: 5,
         gestureHandling: true,
@@ -70,7 +70,7 @@ _Related: [Leaflet-UI presets](https://github.com/raruto/leaflet-ui)_
 
 ---
 
-**Compatibile with:** leaflet@1.3.4
+**Compatible with:** Leaflet@1.9.4 and Leaflet@2.0.0-alpha.1.
 
 ---
 

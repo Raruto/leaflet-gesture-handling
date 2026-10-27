@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Leaflet (JS/CSS) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- leaflet-gesture-handling -->
-  <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-gesture-handling@1.4.4/dist/leaflet-gesture-handling.min.css">
-  <script src="https://unpkg.com/@raruto/leaflet-gesture-handling@1.4.4/dist/leaflet-gesture-handling.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-gesture-handling@1.5.0/dist/leaflet-gesture-handling.min.css">
+  <script src="https://unpkg.com/@raruto/leaflet-gesture-handling@1.5.0/dist/leaflet-gesture-handling.min.js"></script>
 
   <style>
     html,
@@ -31,7 +31,7 @@
   <div id="map" class="map"></div>
 
   <script>
-    var map = new L.Map('map', {
+    const map = new L.Map('map', {
       center: [41.4583, 12.7059],
       zoom: 5,
       gestureHandling: true,
@@ -45,7 +45,7 @@
         // duration: 5000 // set time in ms before the message should disappear.
       }
     });
-    var Basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const Basemap = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>', //, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
     });

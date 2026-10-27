@@ -7,10 +7,9 @@
 	"browser": "./dist/leaflet-gesture-handling.min.js",
 	"module": "src/index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "rollup -c build/rollup.config.js",
-		"watch": "rollup -c build/rollup.config.js --watch",
-		"dev": "npm run watch",
+		"test": "node build/test.js",
+		"build": "node build/build.js",
+		"dev": "node build/dev.js",
 		"version": "npm run build && git add -A dist"
 	},
 	"repository": {
@@ -44,17 +43,11 @@
 	},
 	"homepage": "https://github.com/Raruto/leaflet-gesture-handling#readme",
 	"peerDependencies": {
-		"leaflet": "^1.3.4"
+		"leaflet": "^1.9.4 || 2.0.0-alpha.1"
 	},
 	"devDependencies": {
-		"postcss-copy": "^7.1.0",
-		"postcss-import": "^15.1.0",
-		"rollup": "^3.17.2",
-		"rollup-plugin-copy": "^3.4.0",
-		"rollup-plugin-git-version": "^0.3.1",
-		"rollup-plugin-postcss": "^4.0.2",
-		"@rollup/plugin-commonjs": "^24.0.1",
-		"@rollup/plugin-node-resolve": "^15.0.1",
-		"@rollup/plugin-terser": "^0.4.0"
+		"@cucumber/cucumber": "^10.3.1",
+		"esbuild": "^0.28.2",
+		"playwright": "^1.64.1"
 	}
 }

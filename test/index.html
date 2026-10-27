@@ -6,13 +6,17 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Leaflet (JS/CSS) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet-src.js"></script>
-
-  <!-- leaflet-gesture-handling -->
+  <script>
+    const params = new URLSearchParams(location.search);
+    const leaflet2 = params.get('leaflet') === '2';
+    document.write(`<link rel="stylesheet" href="https://unpkg.com/leaflet@${leaflet2 ? '2.0.0-alpha.1' : '1.9.4'}/dist/leaflet.css">`);
+    document.write(`<script src="https://unpkg.com/leaflet@${leaflet2 ? '2.0.0-alpha.1' : '1.9.4'}/dist/${leaflet2 ? 'leaflet-global.js' : 'leaflet.js'}"><\/script>`);
+  </script>
+  <script>if (leaflet2) window.L = window.leaflet;</script>
+  <script>
+    document.write(`<script src="../dist/leaflet-gesture-handling${params.has('min') ? '.min' : ''}.js"><\/script>`);
+  </script>
   <link rel="stylesheet" href="../dist/leaflet-gesture-handling.css">
-  <script src="../dist/leaflet-gesture-handling.js"></script>
 
   <style>
     html,
@@ -31,7 +35,7 @@
   <div id="map" class="map"></div>
 
   <script>
-    var map = new L.Map('map', {
+    const map = new L.Map('map', {
       center: [41.4583, 12.7059],
       zoom: 5,
       tap: false,
@@ -46,22 +50,22 @@
         // },
         // locale: 'en', // set language of the warning message.
         // duration: 6000 // set time in ms before the message should disappear.
+        duration: 250,
+        locale: params.get('locale')
       }
     });
-    var Basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+    const Basemap = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>', //, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
     });
     Basemap.addTo(map);
 
-    var popup = L.popup({ maxHeight: 150 })
-    .setLatLng(map.getCenter())
-    .setContent('<p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p>')
-    .openOn(map);
+    const popup = new L.Popup({ maxHeight: 150 })
+      .setLatLng(map.getCenter())
+      .setContent('<p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p><p>Hello world!<br />This is a nice popup.</p>')
+      .openOn(map);
   </script>
-
-  	<a href="https://github.com/Raruto/leaflet-gesture-handling" class="view-on-github" style="position: fixed;bottom: 20px;left: calc(50% - 60px);z-index: 9999;" > <img alt="View on Github" src="https://raruto.github.io/img/view-on-github.png" title="View on Github" width="163"> </a>
-
 </body>
 
 </html>

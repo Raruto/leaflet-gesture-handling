@@ -1,6 +1,9 @@
 .leaflet-gesture-handling:after {
   color: #fff;
-  font-family: Roboto, Arial, sans-serif;
+  font-family:
+    Roboto,
+    Arial,
+    sans-serif;
   font-size: 22px;
   justify-content: center;
   display: flex;
@@ -17,18 +20,15 @@
   text-align: center;
   transition: opacity .8s ease-in-out;
   opacity: 0;
-  content: ""
+  content: "";
 }
-
 .leaflet-gesture-handling-warning:after {
   transition-duration: .3s;
-  opacity: 1
+  opacity: 1;
 }
-
 .leaflet-gesture-handling-touch:after {
-  content: attr(data-gesture-handling-touch-content)
+  content: attr(data-gesture-handling-touch-content);
 }
-
 .leaflet-gesture-handling-scroll:after {
-  content: attr(data-gesture-handling-scroll-content)
+  content: attr(data-gesture-handling-scroll-content);
 }
