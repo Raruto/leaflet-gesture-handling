@@ -311,6 +311,8 @@ Then('page zoom is prevented over the popup', function() {
 
 When('I touch a map control', async function() {
 	this.controlTouchResult = await this.page.evaluate(() => {
+		// a mouse resting over the map (as on CI) would already have enabled dragging
+		map.gestureHandling._disableInteractions();
 		const target = map.getContainer().querySelector('.leaflet-control-zoom-in');
 		const touch = new Touch({ identifier: 1, target, clientX: 10, clientY: 10 });
 		target.dispatchEvent(new TouchEvent('touchstart', {
