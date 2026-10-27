@@ -182,9 +182,13 @@ var leafletGestureHandling = (() => {
           this._enableTouchWarning();
         } else {
           this._disableTouchWarning();
+          if ((e.type === "touchend" || e.type === "touchcancel") && e.touches.length === 0) {
+            this._enableInteractions();
+          }
         }
       } else if (e.type !== "touchmove" && e.type !== "touchstart") {
         this._disableTouchWarning();
+        this._enableInteractions();
       } else if (e.touches.length === 1) {
         this._enableTouchWarning();
       } else {
@@ -221,14 +225,20 @@ var leafletGestureHandling = (() => {
       );
     },
     _handleScroll(e) {
-      if (this._map.scrollWheelZoom && this._map.scrollWheelZoom.enabled()) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey && this._map._rotate) {
+      const scrollZoom = this._map.scrollWheelZoom;
+      const scrollWarning = this._map._container.classList.contains("leaflet-gesture-handling-scroll");
+      if (e.metaKey || e.ctrlKey || e.shiftKey && this._map._rotate) {
+        if (scrollZoom && (scrollZoom.enabled() || scrollWarning)) {
           e.preventDefault();
+          if (scrollWarning && !scrollZoom.enabled()) {
+            this._enableInteraction("scrollWheelZoom");
+            scrollZoom._onWheelScroll(e);
+          }
           this._disableScrollWarning();
-        } else {
-          this._enableScrollWarning();
-          this._disableScrollWarning(this._map.options.gestureHandlingOptions.duration);
         }
+      } else if (scrollZoom && scrollZoom.enabled()) {
+        this._enableScrollWarning();
+        this._disableScrollWarning(this._map.options.gestureHandlingOptions.duration);
       }
     },
     _handleScrollOnPopup(e) {
