@@ -1,5 +1,8 @@
 # leaflet-gesture-handling.js
 
+[![NPM version](https://img.shields.io/npm/v/@raruto/leaflet-gesture-handling.svg?color=red)](https://www.npmjs.com/package/@raruto/leaflet-gesture-handling)
+[![License](https://img.shields.io/badge/license-GPL%203-blue.svg?style=flat)](LICENSE)
+
 A Leaflet plugin that allows to prevent default map scroll/touch behaviours.
 
 
@@ -67,6 +70,12 @@ _For a working example see [demo](https://raruto.github.io/leaflet-gesture-handl
     </script>
     ```
 _Related: [Leaflet-UI presets](https://github.com/raruto/leaflet-ui)_
+
+---
+
+**Compatible with:**
+[![Leaflet 1.9.4](https://img.shields.io/badge/Leaflet-1.9.4-1EB300.svg?style=flat)](https://leafletjs.com/reference.html)
+[![Leaflet 2.0.0-beta.3](https://img.shields.io/badge/Leaflet-2.0.0--beta.3-1EB300.svg?style=flat)](https://leafletjs.com/reference.html)
 
 ---
 
