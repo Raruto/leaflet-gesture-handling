@@ -291,6 +291,33 @@ Then('the two-finger event is prevented and map interactions are enabled', funct
 	assert.equal(this.touchResult.dragging, true);
 });
 
+Then('one real finger leaves the map still and two real fingers move it', async function() {
+	await this.page.evaluate(() => popup.remove());
+	await this.page.locator('.leaflet-popup').waitFor({ state: 'detached' });
+	const center = await this.page.evaluate(() => map.getCenter());
+	const box = await this.page.locator('#map').boundingBox();
+	const x = Math.round(box.x + box.width / 2);
+	const y = Math.round(box.y + box.height / 2);
+	const touch = (id, x, y) => ({ id, x, y });
+	const dispatch = (type, touchPoints) => this.session.send('Input.dispatchTouchEvent', { type, touchPoints });
+	await dispatch('touchStart', [touch(1, x, y)]);
+	assert.equal(await this.page.evaluate(() =>
+		map.getContainer().classList.contains('leaflet-gesture-handling-warning')), true);
+	await dispatch('touchMove', [touch(1, x + 60, y + 30)]);
+	await dispatch('touchEnd', []);
+	assert.deepEqual(await this.page.evaluate(() => map.getCenter()), center);
+	await dispatch('touchStart', [touch(1, x - 40, y), touch(2, x + 40, y)]);
+	for (let delta = 10; delta <= 60; delta += 10) {
+		await dispatch('touchMove', [
+			touch(1, x - 40 + delta, y + delta),
+			touch(2, x + 40 + delta, y + delta)
+		]);
+		await this.page.waitForTimeout(20);
+	}
+	await dispatch('touchEnd', []);
+	await this.page.waitForFunction(center => !map.getCenter().equals(center), center);
+});
+
 When('I use Ctrl+scroll over the popup', async function() {
 	this.popupScrollResult = await this.page.evaluate(() => {
 		map.gestureHandling._enableInteractions();
@@ -433,9 +460,7 @@ When('I use real Ctrl+wheel twice over the map', async function() {
 	await this.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
 	this.zooms = [await this.page.evaluate(() => map.getZoom())];
 	await this.page.keyboard.down('Control');
-	// plain Leaflet 2.0.0-alpha.1 ignores repeated real wheel events, so only the first gesture is checked there
-	const gestures = await this.page.evaluate(() => L.version.startsWith('1.') ? 2 : 1);
-	for (let i = 0; i < gestures; i++) {
+	for (let i = 0; i < 2; i++) {
 		await this.page.mouse.wheel(0, -120);
 		await this.page.waitForTimeout(500);
 		await this.page.waitForFunction(z => map.getZoom() > z, this.zooms.at(-1));
@@ -445,6 +470,7 @@ When('I use real Ctrl+wheel twice over the map', async function() {
 });
 
 Then('the map zoomed twice and the warning is gone', async function() {
+	assert.equal(this.zooms.length, 3);
 	assert.ok(this.zooms.every((z, i) => !i || z > this.zooms[i - 1]));
 	assert.equal(await this.page.evaluate(() =>
 		map.getContainer().classList.contains('leaflet-gesture-handling-scroll')), false);

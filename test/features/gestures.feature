@@ -9,6 +9,7 @@ Feature: Gesture handling
       | bundle   |
       | readable |
       | minified |
+      | ES module|
 
   @issue-19
   Scenario: Unmodified scrolling warns and restores map zoom
@@ -79,6 +80,10 @@ Feature: Gesture handling
     When I use repeated one-finger touches and then move two fingers on the map
     Then one-finger warnings and map interactions recover after release
     And the two-finger event is prevented and map interactions are enabled
+
+  Scenario: Real touch gestures block one-finger dragging and allow two-finger panning
+    Given the map is open
+    Then one real finger leaves the map still and two real fingers move it
 
   @issue-6
   Scenario: Ctrl scrolling over a popup prevents page zoom

@@ -10,7 +10,9 @@
 		"test": "node build/test.js",
 		"build": "node build/build.js",
 		"dev": "node build/dev.js",
-		"version": "npm run build && git add -A dist"
+		"preversion": "node build/version.js",
+		"version": "npm run build && git add -A",
+		"postversion": "npm publish --access public && git push --follow-tags"
 	},
 	"repository": {
 		"type": "git",
@@ -43,7 +45,7 @@
 	},
 	"homepage": "https://github.com/Raruto/leaflet-gesture-handling#readme",
 	"peerDependencies": {
-		"leaflet": "^1.9.4 || 2.0.0-alpha.1"
+		"leaflet": "^1.9.4 || ^2.0.0-beta.3"
 	},
 	"devDependencies": {
 		"@cucumber/cucumber": "^13.3.0",
