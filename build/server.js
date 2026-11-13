@@ -80,11 +80,18 @@ export function startServer(port = 8080) {
 				response.writeHead(404).end('Not found');
 				return;
 			}
+			let content = await readFile(filename);
+			if (extname(filename) === '.html') {
+				content = Buffer.from(content.toString().replace(
+					/https:\/\/unpkg\.com\/@raruto\/leaflet-gesture-handling(?:@[^/\s"'<>]+)?\//g, '/'
+				));
+			}
 			response.writeHead(200, {
 				'Content-Type': contentTypes[extname(filename)] || 'application/octet-stream',
-				'Cache-Control': 'no-store'
+				'Cache-Control': 'no-store',
+				'Content-Length': content.length
 			});
-			response.end(request.method === 'HEAD' ? undefined : await readFile(filename));
+			response.end(request.method === 'HEAD' ? undefined : content);
 		} catch (error) {
 			if (error.code === 'ENOENT' || error.code === 'ENOTDIR') {
 				response.writeHead(404).end('Not found');
