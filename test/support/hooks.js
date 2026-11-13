@@ -16,7 +16,7 @@ BeforeAll(async () => {
 	browser = await chromium.launch();
 });
 
-AfterAll({ timeout: 90000 }, async () => {
+AfterAll(async () => {
 	await browser.close();
 	await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
 });
