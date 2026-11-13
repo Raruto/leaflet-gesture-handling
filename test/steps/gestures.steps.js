@@ -36,14 +36,18 @@ Then('disabling and reenabling gesture handling cleans its listeners', async fun
 });
 
 When('I scroll over the map without a modifier', async function() {
-	await this.page.locator('#map').hover();
-	await this.page.locator('#map').dispatchEvent('wheel', { deltaY: 100 });
-	await this.page.waitForFunction(() =>
-		map.getContainer().classList.contains('leaflet-gesture-handling-warning'));
+	await this.page.mouse.move(-1, -1);
+	await this.page.locator('#map').hover({ position: { x: 100, y: 100 } });
+	assert.equal(await this.page.evaluate(() => {
+		const container = map.getContainer();
+		container.dispatchEvent(new WheelEvent('wheel', { bubbles: true, deltaY: 100 }));
+		return container.classList.contains('leaflet-gesture-handling-warning');
+	}), true);
 });
 
 When('I use Ctrl+scroll over the map', async function() {
 	this.ctrlScrollResult = await this.page.evaluate(() => {
+		const warned = map.getContainer().classList.contains('leaflet-gesture-handling-warning');
 		const event = new WheelEvent('wheel', {
 			bubbles: true,
 			cancelable: true,
@@ -51,7 +55,7 @@ When('I use Ctrl+scroll over the map', async function() {
 			deltaY: -120
 		});
 		map.getContainer().dispatchEvent(event);
-		return { prevented: event.defaultPrevented };
+		return { warned, prevented: event.defaultPrevented };
 	});
 	await this.page.waitForFunction(() => map.getZoom() > 5);
 	this.ctrlScrollResult.zoom = await this.page.evaluate(() => map.getZoom());
@@ -472,8 +476,8 @@ When('I use real Ctrl+wheel twice over the map', async function() {
 Then('the map zoomed twice and the warning is gone', async function() {
 	assert.equal(this.zooms.length, 3);
 	assert.ok(this.zooms.every((z, i) => !i || z > this.zooms[i - 1]));
-	assert.equal(await this.page.evaluate(() =>
-		map.getContainer().classList.contains('leaflet-gesture-handling-scroll')), false);
+	await this.page.waitForFunction(() =>
+		!map.getContainer().classList.contains('leaflet-gesture-handling-scroll'));
 });
 
 When('I scroll over a remote MarkerCluster with Ctrl', async function() {
